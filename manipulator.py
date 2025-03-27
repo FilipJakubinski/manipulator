@@ -4,7 +4,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
 # --- PINY ---
-PWM_PIN = 18     # Sterowanie serwem (PWM)
+PWM_PIN = 12     # Sterowanie serwem (PWM)
 OUTPUT_PIN = 16  # Wyjście – domyślnie HIGH, przy przycisku LOW
 BUTTON_PIN = 14  # Przycisk
 
