@@ -22,7 +22,7 @@ def set_angle(angle):
 
 try:
     while True:
-        x=int(input())
+        x=int(input("podaj x"))
         if x==0:
             set_angle(10)
             time.sleep(5)
