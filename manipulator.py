@@ -34,9 +34,9 @@ try:
         if GPIO.input(BUTTON_PIN) == GPIO.HIGH:
             #GPIO.output(OUTPUT_PIN, GPIO.LOW)  # Wciśnięcie = niski stan
             print("Przycisk wciśnięty – napięcie LOW + ruch serwa")
-                set_angle(180)
-                #position = 1
-                time.sleep(1)
+            set_angle(180)
+            #position = 1
+            time.sleep(1)
 
 
         else:
