@@ -26,19 +26,19 @@ def set_angle(angle):
     time.sleep(0.5)
     pwm.ChangeDutyCycle(0)
 
-#position = 0
+position = True
 try:
     print("Czekam na wciśnięcie przycisku...")
 
     while True:
         if GPIO.input(BUTTON_PIN) == GPIO.HIGH:
+            position=not position
+        if position:
             #GPIO.output(OUTPUT_PIN, GPIO.LOW)  # Wciśnięcie = niski stan
             print("Przycisk wciśnięty – napięcie LOW + ruch serwa")
             set_angle(180)
             #position = 1
             time.sleep(1)
-
-
         else:
             #GPIO.output(OUTPUT_PIN, GPIO.HIGH)  # Domyślnie HIGH
             set_angle(0)
