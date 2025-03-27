@@ -26,9 +26,11 @@ try:
         if x==0:
             set_angle(10)
             time.sleep(5)
+            print("0")
         else:
             set_angle(50)
             time.sleep(5)
+            print("1")
 
 except KeyboardInterrupt:
     print("Zatrzymano program")
