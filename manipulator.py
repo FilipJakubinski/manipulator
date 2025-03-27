@@ -13,7 +13,7 @@ GPIO.setup(PWM_PIN, GPIO.OUT)
 #GPIO.setup(OUTPUT_PIN, GPIO.OUT)
 #GPIO.output(OUTPUT_PIN, GPIO.HIGH)  # Domyślnie HIGH
 
-GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PULL_UP)
+GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # --- INICJALIZACJA PWM (50Hz dla serwa) ---
 pwm = GPIO.PWM(PWM_PIN, 50)
