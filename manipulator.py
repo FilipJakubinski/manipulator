@@ -38,7 +38,7 @@ def button_pressed(channel):
         print("Zamknięte")
 
 # --- DETEKCJA PRZYCISKU ---
-GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=button_pressed, bouncetime=100000)
+GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=button_pressed, bouncetime=1000)
 
 # --- GŁÓWNA PĘTLA ---
 try:
