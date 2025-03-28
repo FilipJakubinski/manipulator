@@ -34,12 +34,10 @@ try:
         if GPIO.input(BUTTON_PIN) == GPIO.HIGH:
             if position == 0:
                 set_angle(180)
-                time.sleep(1)
                 position=1
                 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             else:
                 set_angle(0)
-                time.sleep(1)
                 position=0
                 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
