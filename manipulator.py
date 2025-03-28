@@ -13,17 +13,17 @@ GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # --- INICJALIZACJA PWM (50Hz dla serwa) ---
 pwm = GPIO.PWM(PWM_PIN, 50)
-pwm.start(7.5)  # Domyślna pozycja (środek, 90 stopni)
+pwm.start(0)  # Serwo jest w stanie spoczynku
+
+# --- ZMIENNA DO PRZECHOWYWANIA STANU ---
+position = 0  # 0 = zamknięte, 1 = otwarte
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
 def set_angle(angle):
     duty = 2 + (angle / 18)
     pwm.ChangeDutyCycle(duty)
-    time.sleep(0.5)  # Poczekaj na ruch serwa
-    pwm.ChangeDutyCycle(duty)  # Utrzymujemy wartość
-
-# --- ZMIENNA DO PRZECHOWYWANIA STANU ---
-position = 0  # 0 = zamknięte, 1 = otwarte
+    time.sleep(0.5)  # Czekaj, aż serwo się ustawi
+    pwm.ChangeDutyCycle(0)  # Zatrzymanie PWM, aby uniknąć drgań
 
 # --- FUNKCJA OBSŁUGI PRZYCISKU ---
 def button_pressed(channel):
@@ -44,7 +44,7 @@ GPIO.add_event_detect(BUTTON_PIN, GPIO.FALLING, callback=button_pressed, bouncet
 try:
     print("Czekam na wciśnięcie przycisku...")
     while True:
-        time.sleep(1)  # Zmniejsza obciążenie procesora
+        time.sleep(1)  # Oczekiwanie bez obciążania CPU
 
 except KeyboardInterrupt:
     print("Zatrzymano program")
