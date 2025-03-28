@@ -37,7 +37,7 @@ try:
             print("Otwarte")
 
             while GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                time.sleep(0.5)  # Czekaj, aż użytkownik puści przycisk
+                time.sleep(0.01)  # Czekaj, aż użytkownik puści przycisk
 
             print("Zamykam...")
             set_angle(0)  # Zamknij serwo
