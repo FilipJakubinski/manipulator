@@ -13,7 +13,7 @@ GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # --- INICJALIZACJA PWM (50Hz dla serwa) ---
 pwm = GPIO.PWM(PWM_PIN, 50)
-pwm.start(2.5)
+pwm.start(0)
 
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
