@@ -43,7 +43,6 @@ try:
                 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
                 print("zamkniete")
 
-        time.sleep(0.1)
 
 except KeyboardInterrupt:
     print("Zatrzymano program")
