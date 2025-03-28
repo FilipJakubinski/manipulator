@@ -1,50 +1,53 @@
+import pigpio
 import RPi.GPIO as GPIO
 import time
 
 GPIO.setmode(GPIO.BCM)
 
 # --- PINY ---
-PWM_PIN = 18  # Sterowanie serwem (PWM)
+PWM_PIN = 18     # Sterowanie serwem
 BUTTON_PIN = 23  # Przycisk
 
 # --- KONFIGURACJA GPIO ---
-GPIO.setup(PWM_PIN, GPIO.OUT)
 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-# --- INICJALIZACJA PWM (50Hz dla serwa) ---
-pwm = GPIO.PWM(PWM_PIN, 50)
-pwm.start(0)
-
+# --- INICJALIZACJA PIGPIO ---
+pi = pigpio.pi()  # Tworzymy instancję pigpio
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
 def set_angle(angle):
-    duty = 2 + (angle / 18)
-    pwm.ChangeDutyCycle(duty)
-    time.sleep(0.5)  # Czekaj, aż serwo się ustawi
-    pwm.ChangeDutyCycle(0)  # Zatrzymanie PWM, aby uniknąć drgań
+    pulse_width = int((angle / 180) * 2000 + 500)  # 0° = 500µs, 180° = 2500µs
+    pi.set_servo_pulsewidth(PWM_PIN, pulse_width)
 
-
-# --- USTAWIAMY SERWO NA ZAMKNIĘTE ---
+# --- SERWO STARTUJE W POZYCJI ZAMKNIĘTEJ ---
 set_angle(0)
-print("Serwo ustawione na zamknięte")
+print("Serwo zamknięte")
+
+# --- ZMIENNA PRZECHOWUJĄCA STAN SERWA ---
+position = 0  # 0 = zamknięte, 1 = otwarte
 
 try:
-    print("Czekam na wciśnięcie przycisku...")
-
     while True:
-        if GPIO.input(BUTTON_PIN) == GPIO.LOW:  # Wciśnięty przycisk
-            set_angle(180)  # Otwórz serwo
-            print("Otwarte")
+        if GPIO.input(BUTTON_PIN) == GPIO.LOW:  # Przycisk wciśnięty
+            position = 1 - position  # Zmiana stanu (0 -> 1 lub 1 -> 0)
 
-            while GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                time.sleep(0.01)  # Czekaj, aż użytkownik puści przycisk
+            if position == 1:
+                set_angle(180)  # Otwórz serwo
+                print("Otwarte")
+            else:
+                set_angle(0)  # Zamknij serwo
+                print("Zamknięte")
 
-            print("Zamykam...")
-            set_angle(0)  # Zamknij serwo
+            while GPIO.input(BUTTON_PIN) == GPIO.LOW:  # Czekaj na puszczenie przycisku
+                time.sleep(0.1)
+
+        time.sleep(0.1)  # Mała przerwa między sprawdzeniami
 
 except KeyboardInterrupt:
     print("Zatrzymano program")
 
 finally:
-    pwm.stop()
+    set_angle(0)  # Zamknięcie serwa przy wyjściu
+    pi.set_servo_pulsewidth(PWM_PIN, 0)  # Wyłączenie PWM
+    pi.stop()
     GPIO.cleanup()
