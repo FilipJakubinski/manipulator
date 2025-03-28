@@ -18,7 +18,7 @@ pwm.start(0)
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
 def set_angle(angle):
-    duty = 2 + (angle / 18)
+    duty = 2.5 + (angle / 18)
     pwm.ChangeDutyCycle(duty)
     time.sleep(0.5)  # Czekaj, aż serwo się ustawi
     pwm.ChangeDutyCycle(0)  # Zatrzymanie PWM, aby uniknąć drgań
