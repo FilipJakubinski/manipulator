@@ -36,10 +36,12 @@ try:
                 set_angle(180)
                 position=1
                 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                print("otwarte")
             else:
                 set_angle(0)
                 position=0
                 GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+                print("zamkniete")
 
         time.sleep(0.1)
 
