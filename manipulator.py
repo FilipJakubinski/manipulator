@@ -18,10 +18,10 @@ pwm.start(2.5)
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
 def set_angle(angle):
-    duty = 2.5 + (angle / 18)
+    duty = 2 + (angle / 18)
     pwm.ChangeDutyCycle(duty)
     time.sleep(0.5)  # Czekaj, aż serwo się ustawi
-    pwm.ChangeDutyCycle(0)  # Zatrzymanie PWM, aby uniknąć drgań
+    #pwm.ChangeDutyCycle(0)  # Zatrzymanie PWM, aby uniknąć drgań
 
 
 # --- USTAWIAMY SERWO NA ZAMKNIĘTE ---
@@ -37,7 +37,7 @@ try:
             print("Otwarte")
 
             while GPIO.input(BUTTON_PIN) == GPIO.LOW:
-                time.sleep(0.1)  # Czekaj, aż użytkownik puści przycisk
+                time.sleep(0.5)  # Czekaj, aż użytkownik puści przycisk
 
             print("Zamykam...")
             set_angle(0)  # Zamknij serwo
