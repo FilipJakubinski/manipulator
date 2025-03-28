@@ -13,14 +13,14 @@ GPIO.setup(BUTTON_PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # --- INICJALIZACJA PWM (50Hz dla serwa) ---
 pwm = GPIO.PWM(PWM_PIN, 50)
-pwm.start(0)
+pwm.start(7.5)  # Domyślna pozycja (środek, 90 stopni)
 
 # --- FUNKCJA USTAWIANIA KĄTA ---
 def set_angle(angle):
     duty = 2 + (angle / 18)
     pwm.ChangeDutyCycle(duty)
-    time.sleep(0.3)  # Krótszy czas oczekiwania
-    pwm.ChangeDutyCycle(0)
+    time.sleep(0.5)  # Poczekaj na ruch serwa
+    pwm.ChangeDutyCycle(duty)  # Utrzymujemy wartość
 
 # --- ZMIENNA DO PRZECHOWYWANIA STANU ---
 position = 0  # 0 = zamknięte, 1 = otwarte
